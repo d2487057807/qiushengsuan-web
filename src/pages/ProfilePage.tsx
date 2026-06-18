@@ -17,6 +17,7 @@ import {
   updateEmail,
   changePassword,
   sendCode,
+  logout as logoutApi,
 } from '@/api/auth';
 import { isValidImageType, isValidFileSize } from '@/lib/validators';
 import { toast } from 'sonner';
@@ -852,7 +853,7 @@ function EyeBtn({ show, toggle }: { show: boolean; toggle: () => void }) {
 
 export default function ProfilePage() {
   const navigate = useNavigate();
-  const { userInfo, rawUserInfo, setUserInfo, logout, refreshUserInfo } = useAuthStore();
+  const { userInfo, rawUserInfo, setUserInfo, logout, setVoluntaryLogout, refreshUserInfo } = useAuthStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // 页面加载时刷新用户信息
@@ -943,21 +944,30 @@ export default function ProfilePage() {
   };
 
   // 密码修改成功
-  const handlePasswordSuccess = useCallback(() => {
+  const handlePasswordSuccess = useCallback(async () => {
     setActiveModal(null);
     toast.success('密码修改成功，请重新登录');
-    setTimeout(() => {
+    setTimeout(async () => {
+      try {
+        await logoutApi();
+      } catch {
+        // 忽略错误
+      }
       logout();
-      navigate('/login');
     }, 2200);
-  }, [logout, navigate]);
+  }, [logout]);
 
   // 退出登录确认
-  const handleLogoutConfirm = useCallback(() => {
+  const handleLogoutConfirm = useCallback(async () => {
     setActiveModal(null);
+    try {
+      await logoutApi();
+    } catch {
+      // 忽略错误
+    }
+    setVoluntaryLogout(true);
     logout();
-    navigate('/login');
-  }, [logout, navigate]);
+  }, [logout, setVoluntaryLogout]);
 
   // 格式化注册时间
   const formatRegisterTime = () => {
