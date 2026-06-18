@@ -451,7 +451,7 @@ export default function LoginPage() {
         {/* 法律声明 */}
         <div className="mt-5 text-center text-[11px] text-[#5A5D70] leading-relaxed">
           登录即表示同意
-          <Link to="/terms" className="text-[#4A9EFF] hover:underline">《服务协议》</Link>
+          <Link to="/terms" className="text-[#4A9EFF] hover:underline">《用户协议》</Link>
           {' '}和{' '}
           <Link to="/privacy" className="text-[#4A9EFF] hover:underline">《隐私政策》</Link>
         </div>
