@@ -220,7 +220,7 @@ function CustomDatePicker({
       {/* 日历面板 */}
       {open && (
         <div
-          className="absolute top-full left-0 mt-1 rounded-xl overflow-hidden z-[100]"
+          className="absolute top-full right-0 mt-1 rounded-xl overflow-hidden z-[100]"
           style={{
             background: '#1E2130',
             border: '1px solid #2A2D3A',
