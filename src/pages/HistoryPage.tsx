@@ -1266,7 +1266,7 @@ export default function HistoryPage() {
           </div>
 
           {/* 第二行：筛选条件 + 操作按钮 */}
-          <div className="flex items-center gap-2.5 flex-wrap">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2.5 flex-wrap">
             <div className="flex items-center gap-2.5 flex-wrap flex-1">
               {/* 联赛下拉 */}
               <LeagueDropdown
@@ -1284,7 +1284,7 @@ export default function HistoryPage() {
               />
 
               {/* 分隔线 */}
-              <div className="w-px h-6" style={{ background: '#2A2D3A' }} />
+              <div className="w-px h-6 hidden sm:block" style={{ background: '#2A2D3A' }} />
 
               {/* 半全场筛选 */}
               <HafuDropdown value={hafuFilter} onChange={setHafuFilter} />
