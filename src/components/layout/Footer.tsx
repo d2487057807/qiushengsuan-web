@@ -40,8 +40,9 @@ export function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="text-xs text-center" style={{ color: '#8B8FA3' }}>
-          © 2026 球胜算 &nbsp; 数据来源于公开渠道，仅供学习研究参考，不构成任何决策建议
+        <div className="text-xs text-center leading-relaxed" style={{ color: '#8B8FA3' }}>
+          <div>© 2026 球胜算</div>
+          <div className="mt-1">数据来源于公开渠道，仅供学习研究参考，不构成任何决策建议</div>
         </div>
 
         {/* ICP备案号 */}
