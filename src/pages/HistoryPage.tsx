@@ -661,7 +661,7 @@ function TeamSearch({
   };
 
   return (
-    <div ref={ref} className="relative" style={{ width: 230 }}>
+    <div ref={ref} className="relative w-full sm:w-[230px]">
       <div
         className="h-[38px] flex items-center gap-1.5 px-2.5 rounded-lg transition-colors"
         style={{
@@ -1114,10 +1114,10 @@ export default function HistoryPage() {
       )}
 
       {/* 页面标题 */}
-      <div className="flex items-center justify-between mb-5 mt-4">
+      <div className="flex items-center justify-between mb-4 md:mb-5 mt-3 md:mt-4">
         <div>
-          <h1 className="text-[26px] font-bold text-white leading-tight">历史赛事</h1>
-          <p className="text-[13px] text-[#5A5D70] mt-1">查询和分析历史比赛数据</p>
+          <h1 className="text-xl md:text-[26px] font-bold text-white leading-tight">历史赛事</h1>
+          <p className="text-xs md:text-[13px] text-[#5A5D70] mt-0.5 md:mt-1">查询和分析历史比赛数据</p>
         </div>
         <button
           onClick={handleExport}
@@ -1144,15 +1144,12 @@ export default function HistoryPage() {
       </div>
 
       {/* 筛选栏 */}
-      <div
-        className="rounded-xl mb-3"
-        style={{ background: '#1A1D28', padding: '18px 20px' }}
-      >
+      <div className="rounded-xl mb-3 bg-[#1A1D28] p-3 md:p-5">
         {/* 第一行：日期 */}
-        <div className="flex items-center gap-2.5 mb-3">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2.5 mb-3">
           <span className="text-xs text-[#5A5D70] flex-shrink-0">日期</span>
           {/* 快捷按钮 */}
-          <div className="flex gap-1">
+          <div className="flex gap-1 overflow-x-auto hide-scrollbar">
             {(['7d', '30d', '90d'] as const).map((q) => {
               const lbl = q === '7d' ? '近 7 天' : q === '30d' ? '近 30 天' : '近 90 天';
               const active = quickDate === q;
@@ -1191,48 +1188,49 @@ export default function HistoryPage() {
         </div>
 
         {/* 第二行：筛选条件 + 操作按钮 */}
-        <div className="flex items-center gap-2.5 flex-wrap">
-          {/* 联赛下拉 */}
-          <LeagueDropdown
-            value={filters.leagueName || ''}
-            onChange={(v) => updateFilter('leagueName', v || undefined)}
-            leagues={leagues}
-          />
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2.5 flex-wrap">
+          <div className="flex items-center gap-2.5 flex-wrap flex-1">
+            {/* 联赛下拉 */}
+            <LeagueDropdown
+              value={filters.leagueName || ''}
+              onChange={(v) => updateFilter('leagueName', v || undefined)}
+              leagues={leagues}
+            />
 
-          {/* 主客队搜索 */}
-          <TeamSearch
-            placeholder="主客队搜索"
-            value={filters.teamName || ''}
-            onChange={(v) => updateFilter('teamName', v || undefined)}
-            suggestions={allTeams}
-          />
+            {/* 主客队搜索 */}
+            <TeamSearch
+              placeholder="主客队搜索"
+              value={filters.teamName || ''}
+              onChange={(v) => updateFilter('teamName', v || undefined)}
+              suggestions={allTeams}
+            />
 
-          {/* 分隔线 */}
-          <div className="w-px h-6" style={{ background: '#2A2D3A' }} />
+            {/* 分隔线 */}
+            <div className="w-px h-6 hidden sm:block" style={{ background: '#2A2D3A' }} />
 
-          {/* 半全场筛选 */}
-          <HafuDropdown value={hafuFilter} onChange={setHafuFilter} />
-
-          {/* 占位 */}
-          <div className="flex-1" />
+            {/* 半全场筛选 */}
+            <HafuDropdown value={hafuFilter} onChange={setHafuFilter} />
+          </div>
 
           {/* 操作按钮 */}
-          <button
-            onClick={handleReset}
-            className="h-[38px] px-3.5 rounded-lg text-[13px] cursor-pointer flex items-center gap-1.5 transition-all"
-            style={{ background: 'none', border: '1px solid #2A2D3A', color: '#8B8FA3' }}
-            onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#3A3D4A'; e.currentTarget.style.color = '#FFFFFF'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#2A2D3A'; e.currentTarget.style.color = '#8B8FA3'; }}
-          >
-            <RotateCcw size={12} /> 重置
-          </button>
-          <button
-            onClick={handleSearch}
-            className="h-[38px] px-4 rounded-lg text-[13px] font-bold cursor-pointer flex items-center gap-1.5"
-            style={{ background: '#00D68F', border: 'none', color: '#0F1117' }}
-          >
-            <Search size={13} /> 搜索
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleReset}
+              className="h-[38px] px-3.5 rounded-lg text-[13px] cursor-pointer flex items-center gap-1.5 transition-all"
+              style={{ background: 'none', border: '1px solid #2A2D3A', color: '#8B8FA3' }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#3A3D4A'; e.currentTarget.style.color = '#FFFFFF'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#2A2D3A'; e.currentTarget.style.color = '#8B8FA3'; }}
+            >
+              <RotateCcw size={12} /> 重置
+            </button>
+            <button
+              onClick={handleSearch}
+              className="h-[38px] px-4 rounded-lg text-[13px] font-bold cursor-pointer flex items-center gap-1.5"
+              style={{ background: '#00D68F', border: 'none', color: '#0F1117' }}
+            >
+              <Search size={13} /> 搜索
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1289,32 +1287,35 @@ export default function HistoryPage() {
       {/* 结果筛选后无数据 */}
       {pageState === 'loaded' && matches.length > 0 && (
         <>
-          <div className="bg-[#1A1D28] rounded-xl overflow-hidden">
-            {/* 表头 */}
-            <div
-              className="flex items-center px-5"
-              style={{ height: 46, background: '#1E2130', borderBottom: '1px solid #2A2D3A' }}
-            >
-              {COL_HEADS.map(({ label, flex }) => (
-                <div
-                  key={label}
-                  className="text-[11px] font-bold tracking-wider uppercase text-center"
-                  style={{ color: '#5A5D70', flex }}
-                >
-                  {label}
+          <div className="bg-[#1A1D28] rounded-xl overflow-x-auto hide-scrollbar">
+            {/* 表格最小宽度，保证列不被压缩 */}
+            <div style={{ minWidth: 800 }}>
+              {/* 表头 */}
+              <div
+                className="flex items-center px-5"
+                style={{ height: 46, background: '#1E2130', borderBottom: '1px solid #2A2D3A' }}
+              >
+                {COL_HEADS.map(({ label, flex }) => (
+                  <div
+                    key={label}
+                    className="text-[11px] font-bold tracking-wider uppercase text-center"
+                    style={{ color: '#5A5D70', flex }}
+                  >
+                    {label}
+                  </div>
+                ))}
+              </div>
+
+              {/* 数据行 */}
+              {matches.map((match, i) => (
+                <div key={match.matchId}>
+                  <MatchRow match={match} alt={i % 2 === 1} onClick={() => handleRowClick(match)} />
+                  {i < matches.length - 1 && (
+                    <div className="ml-[23px]" style={{ height: 1, background: '#232536' }} />
+                  )}
                 </div>
               ))}
             </div>
-
-            {/* 数据行 */}
-            {matches.map((match, i) => (
-              <div key={match.matchId}>
-                <MatchRow match={match} alt={i % 2 === 1} onClick={() => handleRowClick(match)} />
-                {i < matches.length - 1 && (
-                  <div className="ml-[23px]" style={{ height: 1, background: '#232536' }} />
-                )}
-              </div>
-            ))}
           </div>
 
           {/* 分页 */}
