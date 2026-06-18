@@ -179,7 +179,7 @@ function SmsTab({ onSuccess }: { onSuccess: () => void }) {
 
       {/* 验证码 + 发送按钮 */}
       <div className="flex gap-2">
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <InputField
             icon="✉️"
             placeholder="请输入验证码"
@@ -191,15 +191,15 @@ function SmsTab({ onSuccess }: { onSuccess: () => void }) {
         <button
           onClick={handleSendSms}
           disabled={!canSendSms || loading}
-          className="h-[44px] px-3 rounded-lg border border-[#2A2D3A] bg-transparent text-[13px] font-semibold whitespace-nowrap transition-all flex-shrink-0"
+          className="h-[44px] px-2.5 rounded-lg border border-[#2A2D3A] bg-transparent text-[12px] font-semibold whitespace-nowrap transition-all flex-shrink-0"
           style={{
             color: canSendSms ? '#4A9EFF' : '#8B8FA3',
             cursor: canSendSms ? 'pointer' : 'not-allowed',
           }}
         >
-          {smsSendState === 'sending' ? '发送中...' :
-           smsSendState === 'countdown' ? `${countdown}s 后重发` :
-           '发送验证码'}
+          {smsSendState === 'sending' ? '发送中' :
+           smsSendState === 'countdown' ? `${countdown}s` :
+           '获取验证码'}
         </button>
       </div>
 

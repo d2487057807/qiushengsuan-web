@@ -217,15 +217,15 @@ export default function RegisterPage() {
 
             <div>
               <div className="flex gap-2">
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <InputField icon="✉️" placeholder="请输入验证码" value={smsCode}
                     onChange={(v) => setSmsCode(v.replace(/\D/g, '').slice(0, 6))}
                     disabled={!accountOk || loading} />
                 </div>
                 <button onClick={handleSend} disabled={!canSend || loading}
-                  className="h-[44px] px-3 rounded-lg border border-[#2A2D3A] bg-transparent text-[13px] font-semibold whitespace-nowrap transition-colors flex-shrink-0"
+                  className="h-[44px] px-2.5 rounded-lg border border-[#2A2D3A] bg-transparent text-[12px] font-semibold whitespace-nowrap transition-colors flex-shrink-0"
                   style={{ color: canSend ? '#4A9EFF' : '#8B8FA3', cursor: canSend ? 'pointer' : 'not-allowed' }}>
-                  {smsState === 'sending' ? '发送中...' : smsState === 'countdown' ? `${countdown}s 后重发` : '发送验证码'}
+                  {smsState === 'sending' ? '发送中' : smsState === 'countdown' ? `${countdown}s` : '获取验证码'}
                 </button>
               </div>
               {smsHint && <div className="text-[#8B8FA3] text-xs mt-1">{smsHint}</div>}
