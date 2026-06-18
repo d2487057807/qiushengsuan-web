@@ -82,7 +82,6 @@ function CustomDatePicker({
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const [panelStyle, setPanelStyle] = useState<React.CSSProperties>({});
 
   // 当前显示的月份（用于日历导航）
   const [viewDate, setViewDate] = useState(() => {
@@ -109,42 +108,6 @@ function CustomDatePicker({
     document.addEventListener('mousedown', h);
     return () => document.removeEventListener('mousedown', h);
   }, []);
-
-  // 计算面板位置，防止溢出屏幕
-  const calcPanelPosition = () => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const panelWidth = 280;
-    const viewportWidth = window.innerWidth;
-    const padding = 8;
-
-    let left = 0;
-    // 如果左边溢出
-    if (rect.left + panelWidth / 2 > viewportWidth - padding) {
-      left = -(rect.left + panelWidth - viewportWidth + padding);
-    }
-    // 如果右边溢出
-    else if (rect.right - panelWidth / 2 < padding) {
-      left = padding - rect.left;
-    }
-
-    setPanelStyle({
-      position: 'absolute',
-      top: '100%',
-      left: `calc(50% + ${left}px)`,
-      transform: 'translateX(-50%)',
-      marginTop: 4,
-      zIndex: 100,
-    });
-  };
-
-  // 打开时计算位置
-  const handleOpen = () => {
-    if (!open) {
-      calcPanelPosition();
-    }
-    setOpen((o) => !o);
-  };
 
   const displayText = value || '';
 
@@ -240,16 +203,16 @@ function CustomDatePicker({
     <div ref={ref} className="relative">
       {/* 触发按钮 */}
       <div
-        onClick={handleOpen}
-        className="h-[38px] flex items-center gap-2 px-3 rounded-lg cursor-pointer transition-colors"
+        onClick={() => setOpen((o) => !o)}
+        className="h-[38px] flex items-center gap-1.5 md:gap-2 px-2 md:px-3 rounded-lg cursor-pointer transition-colors"
         style={{
           background: '#252836',
           border: `1px solid ${open ? '#00D68F' : '#2A2D3A'}`,
-          minWidth: 140,
+          minWidth: 110,
         }}
       >
         <Calendar size={14} color="#8B8FA3" className="flex-shrink-0" />
-        <span className={`text-[13px] ${displayText ? 'text-white' : 'text-[#5A5D70]'}`}>
+        <span className={`text-[12px] md:text-[13px] ${displayText ? 'text-white' : 'text-[#5A5D70]'}`}>
           {displayText || placeholder}
         </span>
       </div>
@@ -257,13 +220,12 @@ function CustomDatePicker({
       {/* 日历面板 */}
       {open && (
         <div
-          className="rounded-xl overflow-hidden"
+          className="absolute top-full right-0 mt-1 rounded-xl overflow-hidden z-[100]"
           style={{
-            ...panelStyle,
             background: '#1E2130',
             border: '1px solid #2A2D3A',
             boxShadow: '0 12px 32px rgba(0,0,0,0.5)',
-            width: 280,
+            width: 260,
           }}
         >
           {/* 年月导航 */}
