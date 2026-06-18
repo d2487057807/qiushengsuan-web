@@ -370,7 +370,7 @@ function LeagueDropdown({
   const displayText = value || '全部联赛';
 
   return (
-    <div ref={ref} className="relative" style={{ width: 160 }}>
+    <div ref={ref} className="relative md:w-[160px] w-full">
       {/* 触发按钮 */}
       <button
         onClick={() => setOpen((o) => !o)}
@@ -469,7 +469,7 @@ function HafuDropdown({
   const options = ['HH', 'HD', 'HA', 'DH', 'DD', 'DA', 'AH', 'AD', 'AA'];
 
   return (
-    <div ref={ref} className="relative" style={{ width: 140 }}>
+    <div ref={ref} className="relative md:w-[140px] w-full">
       <button
         onClick={() => setOpen((o) => !o)}
         className="h-[38px] w-full flex items-center justify-between gap-2 px-3 rounded-lg cursor-pointer transition-colors"
