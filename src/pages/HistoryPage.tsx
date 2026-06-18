@@ -989,6 +989,10 @@ export default function HistoryPage() {
       [key]: value,
       ...(key !== 'pageNum' && key !== 'pageSize' ? { pageNum: 1 } : {}),
     }));
+    // 联赛、球队筛选立即同步到 appliedFilters，使标签即时显示
+    if (key === 'leagueName' || key === 'teamName') {
+      setAppliedFilters((prev) => ({ ...prev, [key]: value }));
+    }
   };
 
   // 重置筛选
