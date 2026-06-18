@@ -1038,9 +1038,12 @@ export default function HistoryPage() {
       const date = format(new Date(), 'yyyyMMdd');
       downloadBlob(res, type === 'hafu' ? `半全场分析_${date}.xlsx` : `历史赛事_${date}.xlsx`);
       toast.success('导出成功');
-    } catch (error) {
+    } catch (error: any) {
       console.error('导出失败:', error);
-      toast.error('导出失败');
+      // 拦截器已处理的错误不重复提示
+      if (!error._handled) {
+        toast.error('导出失败');
+      }
     } finally {
       setExporting(false);
     }

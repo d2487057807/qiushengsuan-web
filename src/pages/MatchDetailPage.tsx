@@ -209,9 +209,12 @@ export default function MatchDetailPage() {
         // 默认选中第一个有数据的Tab
         const firstTab = TABS.find((t) => available.has(t.key));
         if (firstTab) setActiveTab(firstTab.key);
-      } catch (error) {
+      } catch (error: any) {
         console.error('加载赛事详情失败:', error);
-        toast.error('加载赛事详情失败');
+        // 拦截器已处理的错误不重复提示
+        if (!error._handled) {
+          toast.error('加载赛事详情失败');
+        }
       } finally {
         setLoading(false);
       }
