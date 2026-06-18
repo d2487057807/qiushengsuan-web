@@ -79,7 +79,9 @@ function SmsTab({ onSuccess }: { onSuccess: () => void }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { login, refreshUserInfo } = useAuthStore();
-  const from = (location.state as { from?: string })?.from || '/';
+  const state = location.state as { from?: string; voluntary?: boolean };
+  // 主动退出登录后跳转到首页，被拦截则返回原页面
+  const from = state?.voluntary ? '/' : (state?.from || '/');
 
   const [phone, setPhone] = useState('');
   const [phoneError, setPhoneError] = useState('');
@@ -235,7 +237,9 @@ function PasswordTab({ onSuccess }: { onSuccess: () => void }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { login, refreshUserInfo } = useAuthStore();
-  const from = (location.state as { from?: string })?.from || '/';
+  const state = location.state as { from?: string; voluntary?: boolean };
+  // 主动退出登录后跳转到首页，被拦截则返回原页面
+  const from = state?.voluntary ? '/' : (state?.from || '/');
 
   const [account, setAccount] = useState('');
   const [password, setPassword] = useState('');

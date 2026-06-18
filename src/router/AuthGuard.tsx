@@ -16,7 +16,9 @@ export function AuthGuard({ children }: AuthGuardProps) {
 
   if (!isLoggedIn) {
     // 未登录，跳转到登录页，并记住原路径
-    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
+    // 保留已有的 state（如 voluntary 标志），避免被覆盖
+    const existingState = location.state as Record<string, unknown> | null;
+    return <Navigate to="/login" state={{ ...existingState, from: location.pathname }} replace />;
   }
 
   return <>{children}</>;

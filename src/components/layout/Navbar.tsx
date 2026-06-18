@@ -56,7 +56,8 @@ export function Navbar() {
     }
     logout();
     toast.success('已退出登录');
-    navigate('/login');
+    // 传递 voluntary 标志，登录后跳转到首页而非之前的页面
+    navigate('/login', { state: { voluntary: true } });
   };
 
   // 获取用户显示名
