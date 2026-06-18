@@ -371,10 +371,8 @@ function ChangePhoneModal({
     try {
       await updatePhone({ newPhone, oldPhoneCode: code1, newPhoneCode: code2 });
       onSuccess();
-    } catch (error: any) {
-      // 优先显示后端返回的错误信息
-      const message = error?.response?.data?.message || '换绑失败';
-      toast.error(message);
+    } catch {
+      // 错误由响应拦截器统一处理，此处不再重复提示
     } finally {
       setLoading(false);
     }
