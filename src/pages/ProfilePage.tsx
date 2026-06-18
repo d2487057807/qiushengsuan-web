@@ -5,7 +5,6 @@
  */
 
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { CaptchaButton } from '@/components/shared/CaptchaButton';
@@ -854,7 +853,6 @@ function EyeBtn({ show, toggle }: { show: boolean; toggle: () => void }) {
 }
 
 export default function ProfilePage() {
-  const navigate = useNavigate();
   const { userInfo, rawUserInfo, setUserInfo, logout, setVoluntaryLogout, refreshUserInfo } = useAuthStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
