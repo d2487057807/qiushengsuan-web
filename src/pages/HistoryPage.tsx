@@ -422,7 +422,7 @@ function LeagueDropdown({
             const selected = value === l.leagueName;
             return (
               <div
-                key={l.leagueId}
+                key={l.leagueName}
                 onClick={() => { onChange(l.leagueName); setOpen(false); }}
                 className="px-3.5 py-2 cursor-pointer text-[13px] transition-colors"
                 style={{
