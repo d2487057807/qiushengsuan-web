@@ -75,10 +75,12 @@ function CustomDatePicker({
   value,
   onChange,
   placeholder = '选择日期',
+  align = 'center',
 }: {
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
+  align?: 'left' | 'right' | 'center';
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -220,13 +222,14 @@ function CustomDatePicker({
       {/* 日历面板 */}
       {open && (
         <div
-          className="absolute top-full left-1/2 mt-1 rounded-xl overflow-hidden z-[100]"
+          className={`absolute top-full mt-1 rounded-xl overflow-hidden z-[100] ${
+            align === 'left' ? 'left-0' : align === 'right' ? 'right-0' : 'left-1/2 -translate-x-1/2'
+          }`}
           style={{
             background: '#1E2130',
             border: '1px solid #2A2D3A',
             boxShadow: '0 12px 32px rgba(0,0,0,0.5)',
             width: 'clamp(260px, 75vw, 280px)',
-            transform: 'translateX(-50%)',
           }}
         >
           {/* 年月导航 */}
@@ -1155,6 +1158,7 @@ export default function HistoryPage() {
                 value={filters.beginDate || ''}
                 onChange={(v) => { updateFilter('beginDate', v); setQuickDate('custom'); setAppliedFilters((f) => ({ ...f, beginDate: v })); }}
                 placeholder="开始日期"
+                align="left"
               />
             </div>
             <span className="text-[#3A3D4A] flex items-center">-</span>
@@ -1163,6 +1167,7 @@ export default function HistoryPage() {
                 value={filters.endDate || ''}
                 onChange={(v) => { updateFilter('endDate', v); setQuickDate('custom'); setAppliedFilters((f) => ({ ...f, endDate: v })); }}
                 placeholder="结束日期"
+                align="right"
               />
             </div>
           </div>
