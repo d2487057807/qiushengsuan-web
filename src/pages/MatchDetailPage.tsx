@@ -461,55 +461,69 @@ export default function MatchDetailPage() {
   return (
     <PageLayout>
       {/* 面包屑 */}
-      <div className="sticky top-16 z-40 bg-[#0F1117] border-b border-[#2A2D3A] -mx-6 px-6 mb-6">
-        <div className="flex items-center gap-2 py-3">
-          <Link to={source === 'history' ? '/history' : '/'} className="text-sm text-[#8B8FA3] hover:text-white transition-colors">← 返回赛事列表</Link>
-          <span className="text-[#2A2D3A]">·</span>
-          <span className="text-sm text-[#8B8FA3]">{match.leagueName} · 赛事详情</span>
+      <div className="sticky top-14 md:top-16 z-40 bg-[#0F1117] border-b border-[#2A2D3A] -mx-4 md:-mx-6 px-4 md:px-6 mb-4 md:mb-6">
+        <div className="flex items-center gap-2 py-2.5 md:py-3">
+          <Link to={source === 'history' ? '/history' : '/'} className="text-xs md:text-sm text-[#8B8FA3] hover:text-white transition-colors">← 返回赛事列表</Link>
+          <span className="text-[#2A2D3A] hidden sm:inline">·</span>
+          <span className="text-xs md:text-sm text-[#8B8FA3] hidden sm:inline">{match.leagueName} · 赛事详情</span>
         </div>
       </div>
 
       {/* ① 顶部信息卡片 */}
-      <div className="bg-[#1A1D28] rounded-xl p-5 mb-[14px] flex items-center justify-between relative">
-        <div className="flex flex-col items-start gap-1.5">
-          <LeagueTag name={match.leagueName} />
-          <span className="text-xs text-[#8B8FA3]">{match.matchTime}</span>
-        </div>
-        <div className="flex items-center gap-5">
-          <div className="text-right">
-            <div className="text-2xl font-bold text-white">{match.homeTeam}</div>
-            <div className="text-xs text-[#8B8FA3] mt-0.5">主队</div>
+      <div className="bg-[#1A1D28] rounded-xl p-4 md:p-5 mb-3 md:mb-[14px] relative">
+        {/* 移动端：状态标签在顶部 */}
+        <div className="flex items-center justify-between mb-3 md:hidden">
+          <div className="flex items-center gap-2">
+            <LeagueTag name={match.leagueName} />
+            <span className="text-xs text-[#8B8FA3]">{match.matchTime}</span>
           </div>
-          <div className="text-center min-w-[100px]">
-            {match.matchStatus === '2' ? (
-              <>
-                <div className="text-4xl font-extrabold leading-none" style={{ color: '#00D68F' }}>{match.score}</div>
-                <div className="text-[11px] text-[#8B8FA3] mt-1">半场 {match.halfScore}</div>
-              </>
-            ) : (
-              <div className="text-2xl text-muted-foreground font-bold">VS</div>
-            )}
-          </div>
-          <div className="text-left">
-            <div className="text-2xl font-bold text-white">{match.awayTeam}</div>
-            <div className="text-xs text-[#8B8FA3] mt-0.5">客队</div>
+          <div className="px-2.5 py-1 rounded-[16px] text-xs font-semibold"
+            style={{ background: 'rgba(0,214,143,0.15)', border: '1px solid rgba(0,214,143,0.4)', color: '#00D68F' }}>
+            {match.matchStatus === '2' ? '已完赛' : '进行中'}
           </div>
         </div>
-        <div className="px-3.5 py-1.5 rounded-[20px] text-[13px] font-semibold"
-          style={{ background: 'rgba(0,214,143,0.15)', border: '1px solid rgba(0,214,143,0.4)', color: '#00D68F' }}>
-          {match.matchStatus === '2' ? '已完赛' : '进行中'}
+        {/* 移动端：主队/VS/客队 居中纵向 */}
+        <div className="flex items-center justify-between md:justify-between">
+          <div className="hidden md:flex flex-col items-start gap-1.5">
+            <LeagueTag name={match.leagueName} />
+            <span className="text-xs text-[#8B8FA3]">{match.matchTime}</span>
+          </div>
+          <div className="flex items-center gap-3 sm:gap-5 flex-1 justify-center">
+            <div className="text-right">
+              <div className="text-lg sm:text-2xl font-bold text-white">{match.homeTeam}</div>
+              <div className="text-xs text-[#8B8FA3] mt-0.5">主队</div>
+            </div>
+            <div className="text-center min-w-[60px] sm:min-w-[100px]">
+              {match.matchStatus === '2' ? (
+                <>
+                  <div className="text-2xl sm:text-4xl font-extrabold leading-none" style={{ color: '#00D68F' }}>{match.score}</div>
+                  <div className="text-[10px] sm:text-[11px] text-[#8B8FA3] mt-1">半场 {match.halfScore}</div>
+                </>
+              ) : (
+                <div className="text-xl sm:text-2xl text-muted-foreground font-bold">VS</div>
+              )}
+            </div>
+            <div className="text-left">
+              <div className="text-lg sm:text-2xl font-bold text-white">{match.awayTeam}</div>
+              <div className="text-xs text-[#8B8FA3] mt-0.5">客队</div>
+            </div>
+          </div>
+          <div className="hidden md:block px-3.5 py-1.5 rounded-[20px] text-[13px] font-semibold"
+            style={{ background: 'rgba(0,214,143,0.15)', border: '1px solid rgba(0,214,143,0.4)', color: '#00D68F' }}>
+            {match.matchStatus === '2' ? '已完赛' : '进行中'}
+          </div>
         </div>
       </div>
 
       {/* ② 比赛结果卡片 */}
       {match.matchStatus === '2' && openingResults.length > 0 && (
-        <div className="bg-[#1A1D28] rounded-xl p-4 mb-[14px]">
-          <div className="text-base font-bold text-white mb-3">比赛结果</div>
-          <div className="flex gap-2.5">
+        <div className="bg-[#1A1D28] rounded-xl p-3 md:p-4 mb-3 md:mb-[14px]">
+          <div className="text-sm md:text-base font-bold text-white mb-2 md:mb-3">比赛结果</div>
+          <div className="grid grid-cols-3 sm:flex gap-2 md:gap-2.5">
             {openingResults.map(({ play, result }) => (
-              <div key={play} className="flex-1 bg-[#252836] rounded-lg py-2.5 px-3 text-center">
-                <div className="text-xs text-[#8B8FA3] mb-1.5">{play}</div>
-                <div className="text-sm font-bold text-white">{result}</div>
+              <div key={play} className="bg-[#252836] rounded-lg py-2 md:py-2.5 px-2 md:px-3 text-center">
+                <div className="text-[10px] md:text-xs text-[#8B8FA3] mb-1 md:mb-1.5">{play}</div>
+                <div className="text-xs md:text-sm font-bold text-white">{result}</div>
               </div>
             ))}
           </div>
@@ -517,7 +531,7 @@ export default function MatchDetailPage() {
       )}
 
       {/* ③ Tab切换栏 */}
-      <div className="bg-[#1A1D28] rounded-xl mb-[14px] relative">
+      <div className="bg-[#1A1D28] rounded-xl mb-3 md:mb-[14px] relative overflow-x-auto hide-scrollbar">
         <div className="flex">
           {TABS.map((tab, idx) => {
             const isActive = activeTab === tab.key;
@@ -538,9 +552,9 @@ export default function MatchDetailPage() {
       </div>
 
       {/* ④ Tab内容区 */}
-      <div className="flex gap-5 items-start">
-        {/* 左侧 2/3 */}
-        <div ref={leftPanelRef} className="flex-[2] min-w-0">
+      <div className="flex flex-col lg:flex-row gap-4 lg:gap-5 items-start">
+        {/* 左侧：桌面端 2/3，移动端全宽 */}
+        <div ref={leftPanelRef} className="w-full lg:flex-[2] min-w-0">
           <div style={{ opacity: contentVisible ? 1 : 0, transition: 'opacity 0.2s ease-out' }}>
             {/* 赔率走势 */}
             <div className="bg-[#1A1D28] rounded-xl mb-[14px]">
@@ -631,9 +645,9 @@ export default function MatchDetailPage() {
           </div>
         </div>
 
-        {/* 右侧 1/3：相似比赛（高度跟随左侧） */}
-        <div className="flex-1 min-w-[260px]">
-          <div className="bg-[#1A1D28] rounded-xl p-5 flex flex-col" style={leftHeight ? { maxHeight: leftHeight, transition: 'max-height 0.3s ease-out' } : undefined}>
+        {/* 右侧：桌面端 1/3，移动端全宽 */}
+        <div className="w-full lg:flex-1 lg:min-w-[260px]">
+          <div className="bg-[#1A1D28] rounded-xl p-4 md:p-5 flex flex-col" style={leftHeight ? { maxHeight: leftHeight, transition: 'max-height 0.3s ease-out' } : undefined}>
             <h3 className="text-xl font-bold text-white mb-4">历史相似比赛 TOP 20</h3>
             {similarLoading ? (
               <div className="text-center py-10">
