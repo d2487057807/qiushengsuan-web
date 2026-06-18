@@ -513,8 +513,10 @@ function ChangeEmailModal({ onClose, onSuccess }: { onClose: () => void; onSucce
       await updateEmail({ email: newEmail, verifyCode: code });
       onSuccess();
     } catch (error: any) {
-      const message = error?.response?.data?.message || '换绑失败';
-      toast.error(message);
+      // 拦截器已处理的错误不重复提示
+      if (!error._handled) {
+        toast.error(error?.response?.data?.message || '换绑失败');
+      }
     } finally {
       setLoading(false);
     }
@@ -913,8 +915,10 @@ export default function ProfilePage() {
       await refreshUserInfo();
       toast.success('头像更新成功');
     } catch (error: any) {
-      const message = error?.response?.data?.message || '头像上传失败';
-      toast.error(message);
+      // 拦截器已处理的错误不重复提示
+      if (!error._handled) {
+        toast.error(error?.response?.data?.message || '头像上传失败');
+      }
     } finally {
       setAvatarUploading(false);
       setCropSrc(null);
