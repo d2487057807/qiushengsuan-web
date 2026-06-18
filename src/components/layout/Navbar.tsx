@@ -22,7 +22,7 @@ const NAV_ITEMS = [
 export function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isLoggedIn, userInfo, logout } = useAuthStore();
+  const { isLoggedIn, userInfo, logout, setVoluntaryLogout } = useAuthStore();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -54,10 +54,10 @@ export function Navbar() {
     } catch {
       // 忽略错误
     }
+    // 先设置主动退出标志，再 logout（logout 会触发 AuthGuard 重定向）
+    setVoluntaryLogout(true);
     logout();
     toast.success('已退出登录');
-    // 传递 voluntary 标志，登录后跳转到首页而非之前的页面
-    navigate('/login', { state: { voluntary: true } });
   };
 
   // 获取用户显示名

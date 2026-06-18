@@ -12,13 +12,13 @@ interface AuthGuardProps {
 
 export function AuthGuard({ children }: AuthGuardProps) {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const voluntaryLogout = useAuthStore((state) => state.voluntaryLogout);
   const location = useLocation();
 
   if (!isLoggedIn) {
-    // 未登录，跳转到登录页，并记住原路径
-    // 保留已有的 state（如 voluntary 标志），避免被覆盖
-    const existingState = location.state as Record<string, unknown> | null;
-    return <Navigate to="/login" state={{ ...existingState, from: location.pathname }} replace />;
+    // 主动退出登录时，不传递 from，登录后跳转到首页
+    const state = voluntaryLogout ? {} : { from: location.pathname };
+    return <Navigate to="/login" state={state} replace />;
   }
 
   return <>{children}</>;

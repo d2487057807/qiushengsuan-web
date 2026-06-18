@@ -42,12 +42,14 @@ interface AuthState {
   userInfo: UserInfo | null;
   rawUserInfo: UserInfo | null;  // 原始数据（用于换绑等操作）
   isLoggedIn: boolean;
+  voluntaryLogout: boolean;  // 是否主动退出登录
 }
 
 // Store 操作类型
 interface AuthActions {
   login: (token: string) => void;
   logout: () => void;
+  setVoluntaryLogout: (v: boolean) => void;
   setUserInfo: (userInfo: Partial<UserInfo>) => void;
   refreshUserInfo: () => Promise<void>;
   hydrate: () => void;
@@ -80,6 +82,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   userInfo: getUserInfoFromStorage(),
   rawUserInfo: null,  // 原始数据不持久化
   isLoggedIn: !!getTokenFromStorage(),
+  voluntaryLogout: false,
 
   // 登录（只保存 token，用户信息通过 refreshUserInfo 获取）
   login: (token: string) => {
@@ -87,6 +90,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     set({
       token,
       isLoggedIn: true,
+      voluntaryLogout: false,
     });
   },
 
@@ -100,6 +104,11 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       rawUserInfo: null,
       isLoggedIn: false,
     });
+  },
+
+  // 设置主动退出标志
+  setVoluntaryLogout: (v: boolean) => {
+    set({ voluntaryLogout: v });
   },
 
   // 更新用户信息（部分更新）
