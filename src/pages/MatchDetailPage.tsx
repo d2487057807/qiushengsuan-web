@@ -517,13 +517,13 @@ export default function MatchDetailPage() {
 
       {/* ② 比赛结果卡片 */}
       {match.matchStatus === '2' && openingResults.length > 0 && (
-        <div className="bg-[#1A1D28] rounded-xl p-3 md:p-4 mb-3 md:mb-[14px]">
-          <div className="text-sm md:text-base font-bold text-white mb-2 md:mb-3">比赛结果</div>
-          <div className="grid grid-cols-3 sm:flex gap-2 md:gap-2.5">
+        <div className="bg-[#1A1D28] rounded-xl p-4 mb-[14px]">
+          <div className="text-base font-bold text-white mb-3">比赛结果</div>
+          <div className="flex gap-2.5">
             {openingResults.map(({ play, result }) => (
-              <div key={play} className="bg-[#252836] rounded-lg py-2 md:py-2.5 px-2 md:px-3 text-center">
-                <div className="text-[10px] md:text-xs text-[#8B8FA3] mb-1 md:mb-1.5">{play}</div>
-                <div className="text-xs md:text-sm font-bold text-white">{result}</div>
+              <div key={play} className="flex-1 bg-[#252836] rounded-lg py-2.5 px-3 text-center">
+                <div className="text-xs text-[#8B8FA3] mb-1.5">{play}</div>
+                <div className="text-sm font-bold text-white">{result}</div>
               </div>
             ))}
           </div>
