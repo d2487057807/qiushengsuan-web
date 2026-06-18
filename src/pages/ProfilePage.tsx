@@ -87,18 +87,18 @@ function InfoRow({
       onClick={onAction}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="flex items-center h-14 px-5 transition-colors"
+      className="flex items-center h-12 md:h-14 px-4 md:px-5 transition-colors"
       style={{
         borderBottom: isLast ? 'none' : '1px solid #2A2D3A',
         cursor: onAction ? 'pointer' : 'default',
         background: hovered && onAction ? 'rgba(255,255,255,0.02)' : 'transparent',
       }}
     >
-      <span className="text-base w-7 flex-shrink-0">{icon}</span>
-      <span className="text-sm w-[72px] flex-shrink-0" style={{ color: '#8B8FA3' }}>{label}</span>
-      <span className="text-sm text-white flex-1">{value}</span>
+      <span className="text-base w-6 md:w-7 flex-shrink-0">{icon}</span>
+      <span className="text-xs md:text-sm w-14 md:w-[72px] flex-shrink-0" style={{ color: '#8B8FA3' }}>{label}</span>
+      <span className="text-xs md:text-sm text-white flex-1 truncate">{value}</span>
       {actionLabel && (
-        <span className="text-[13px] mr-2 flex-shrink-0" style={{ color: '#4A9EFF' }}>{actionLabel}</span>
+        <span className="text-xs md:text-[13px] mr-1 md:mr-2 flex-shrink-0" style={{ color: '#4A9EFF' }}>{actionLabel}</span>
       )}
       {onAction && (
         <span className="text-base" style={{ color: '#3A3D4A' }}>›</span>
@@ -140,7 +140,7 @@ function AvatarCropModal({
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-[200] flex items-center justify-center p-6"
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6"
       style={{ background: 'rgba(0,0,0,0.65)' }}
     >
       <div
@@ -261,7 +261,7 @@ function EditNicknameModal({
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-[200] flex items-center justify-center p-6"
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6"
       style={{ background: 'rgba(0,0,0,0.65)' }}
     >
       <div
@@ -382,7 +382,7 @@ function ChangePhoneModal({
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-[200] flex items-center justify-center p-6"
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6"
       style={{ background: 'rgba(0,0,0,0.65)' }}
     >
       <div
@@ -525,7 +525,7 @@ function ChangeEmailModal({ onClose, onSuccess }: { onClose: () => void; onSucce
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-[200] flex items-center justify-center p-6"
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6"
       style={{ background: 'rgba(0,0,0,0.65)' }}
     >
       <div
@@ -609,7 +609,7 @@ function ChangePasswordModal({ hasPassword, onClose, onSuccess }: { hasPassword:
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-[200] flex items-center justify-center p-6"
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6"
       style={{ background: 'rgba(0,0,0,0.65)' }}
     >
       <div
@@ -703,7 +703,7 @@ function LogoutConfirmModal({ onClose, onConfirm }: { onClose: () => void; onCon
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-[200] flex items-center justify-center p-6"
+      className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6"
       style={{ background: 'rgba(0,0,0,0.65)' }}
     >
       <div
@@ -995,12 +995,12 @@ export default function ProfilePage() {
 
   return (
     <PageLayout>
-      <h1 className="text-[28px] font-bold text-white mb-6 mt-6">个人中心</h1>
+      <h1 className="text-2xl md:text-[28px] font-bold text-white mb-4 md:mb-6 mt-4 md:mt-6">个人中心</h1>
 
-      <div className="max-w-[700px] mx-auto space-y-[14px]">
+      <div className="max-w-[700px] mx-auto space-y-3 md:space-y-[14px]">
         {/* 头像卡片 */}
         <div
-          className="rounded-xl p-8 flex flex-col items-center"
+          className="rounded-xl p-5 md:p-8 flex flex-col items-center"
           style={{ background: '#1A1D28', border: '1px solid #2A2D3A' }}
         >
           {/* 头像 */}
@@ -1117,10 +1117,10 @@ export default function ProfilePage() {
         </div>
 
         {/* 退出登录按钮 - 居中 */}
-        <div className="flex justify-center pb-10">
+        <div className="flex justify-center pb-8 md:pb-10">
           <button
             onClick={() => setActiveModal('logout')}
-            className="w-[200px] h-11 rounded-lg text-sm font-bold cursor-pointer transition-all"
+            className="w-full max-w-[200px] h-11 rounded-lg text-sm font-bold cursor-pointer transition-all"
             style={{ background: 'none', border: '1px solid #FF4D6A', color: '#FF4D6A' }}
             onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,77,106,0.08)')}
             onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
