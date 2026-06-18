@@ -204,15 +204,14 @@ function CustomDatePicker({
       {/* 触发按钮 */}
       <div
         onClick={() => setOpen((o) => !o)}
-        className="h-[38px] flex items-center gap-2 px-3 rounded-lg cursor-pointer transition-colors"
+        className="h-[38px] flex items-center gap-1.5 px-2.5 md:px-3 rounded-lg cursor-pointer transition-colors"
         style={{
           background: '#252836',
           border: `1px solid ${open ? '#00D68F' : '#2A2D3A'}`,
-          minWidth: 140,
         }}
       >
         <Calendar size={14} color="#8B8FA3" className="flex-shrink-0" />
-        <span className={`text-[13px] ${displayText ? 'text-white' : 'text-[#5A5D70]'}`}>
+        <span className={`text-[12px] md:text-[13px] whitespace-nowrap ${displayText ? 'text-white' : 'text-[#5A5D70]'}`}>
           {displayText || placeholder}
         </span>
       </div>
@@ -370,7 +369,7 @@ function LeagueDropdown({
   const displayText = value || '全部联赛';
 
   return (
-    <div ref={ref} className="relative" style={{ width: 160 }}>
+    <div ref={ref} className="relative w-full md:w-[160px]">
       {/* 触发按钮 */}
       <button
         onClick={() => setOpen((o) => !o)}
@@ -469,7 +468,7 @@ function HafuDropdown({
   const options = ['HH', 'HD', 'HA', 'DH', 'DD', 'DA', 'AH', 'AD', 'AA'];
 
   return (
-    <div ref={ref} className="relative" style={{ width: 140 }}>
+    <div ref={ref} className="relative w-full md:w-[140px]">
       <button
         onClick={() => setOpen((o) => !o)}
         className="h-[38px] w-full flex items-center justify-between gap-2 px-3 rounded-lg cursor-pointer transition-colors"
@@ -1145,22 +1144,21 @@ export default function HistoryPage() {
 
       {/* 筛选栏 */}
       <div className="rounded-xl mb-3 bg-[#1A1D28] p-3 md:p-5">
-        {/* 第一行：日期 */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2.5 mb-3">
-          <span className="text-xs text-[#5A5D70] flex-shrink-0">日期</span>
-          {/* 快捷按钮 */}
-          <div className="flex gap-1 overflow-x-auto hide-scrollbar">
+        {/* 移动端布局 */}
+        <div className="block md:hidden">
+          {/* 日期快捷按钮 */}
+          <div className="flex gap-1.5 mb-3 overflow-x-auto hide-scrollbar pb-1">
             {(['7d', '30d', '90d'] as const).map((q) => {
-              const lbl = q === '7d' ? '近 7 天' : q === '30d' ? '近 30 天' : '近 90 天';
+              const lbl = q === '7d' ? '7天' : q === '30d' ? '30天' : '90天';
               const active = quickDate === q;
               return (
                 <button
                   key={q}
                   onClick={() => applyQuickDate(q)}
-                  className="h-7 px-2.5 rounded-md text-xs cursor-pointer transition-all"
+                  className="flex-shrink-0 h-8 px-3 rounded-lg text-xs font-medium cursor-pointer transition-all"
                   style={{
                     border: `1px solid ${active ? '#00D68F' : '#2A2D3A'}`,
-                    background: active ? 'rgba(0,214,143,0.1)' : 'transparent',
+                    background: active ? 'rgba(0,214,143,0.15)' : 'transparent',
                     color: active ? '#00D68F' : '#8B8FA3',
                   }}
                 >
@@ -1168,68 +1166,149 @@ export default function HistoryPage() {
                 </button>
               );
             })}
-          </div>
-          {/* 分隔线 */}
-          <div className="w-px h-5" style={{ background: '#2A2D3A' }} />
-          {/* 日期输入 */}
-          <div className="flex items-center gap-1.5">
+            <div className="w-px h-8 mx-0.5 flex-shrink-0" style={{ background: '#2A2D3A' }} />
             <CustomDatePicker
               value={filters.beginDate || ''}
               onChange={(v) => { updateFilter('beginDate', v); setQuickDate('custom'); setAppliedFilters((f) => ({ ...f, beginDate: v })); }}
               placeholder="开始日期"
             />
-            <span className="text-[13px]" style={{ color: '#3A3D4A' }}>—</span>
+            <span className="text-[#3A3D4A] flex items-center">-</span>
             <CustomDatePicker
               value={filters.endDate || ''}
               onChange={(v) => { updateFilter('endDate', v); setQuickDate('custom'); setAppliedFilters((f) => ({ ...f, endDate: v })); }}
               placeholder="结束日期"
             />
           </div>
-        </div>
 
-        {/* 第二行：筛选条件 + 操作按钮 */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2.5 flex-wrap">
-          <div className="flex items-center gap-2.5 flex-wrap flex-1">
-            {/* 联赛下拉 */}
-            <LeagueDropdown
-              value={filters.leagueName || ''}
-              onChange={(v) => updateFilter('leagueName', v || undefined)}
-              leagues={leagues}
-            />
-
-            {/* 主客队搜索 */}
+          {/* 筛选条件 */}
+          <div className="flex flex-col gap-2 mb-3">
+            <div className="flex gap-2">
+              <div className="flex-1">
+                <LeagueDropdown
+                  value={filters.leagueName || ''}
+                  onChange={(v) => updateFilter('leagueName', v || undefined)}
+                  leagues={leagues}
+                />
+              </div>
+              <div className="flex-1">
+                <HafuDropdown value={hafuFilter} onChange={setHafuFilter} />
+              </div>
+            </div>
             <TeamSearch
-              placeholder="主客队搜索"
+              placeholder="搜索主队或客队"
               value={filters.teamName || ''}
               onChange={(v) => updateFilter('teamName', v || undefined)}
               suggestions={allTeams}
             />
-
-            {/* 分隔线 */}
-            <div className="w-px h-6 hidden sm:block" style={{ background: '#2A2D3A' }} />
-
-            {/* 半全场筛选 */}
-            <HafuDropdown value={hafuFilter} onChange={setHafuFilter} />
           </div>
 
           {/* 操作按钮 */}
-          <div className="flex items-center gap-2">
+          <div className="flex gap-2">
             <button
               onClick={handleReset}
-              className="h-[38px] px-3.5 rounded-lg text-[13px] cursor-pointer flex items-center gap-1.5 transition-all"
+              className="flex-1 h-9 rounded-lg text-xs cursor-pointer flex items-center justify-center gap-1.5 transition-all"
               style={{ background: 'none', border: '1px solid #2A2D3A', color: '#8B8FA3' }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#3A3D4A'; e.currentTarget.style.color = '#FFFFFF'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#2A2D3A'; e.currentTarget.style.color = '#8B8FA3'; }}
             >
               <RotateCcw size={12} /> 重置
             </button>
             <button
               onClick={handleSearch}
-              className="h-[38px] px-4 rounded-lg text-[13px] font-bold cursor-pointer flex items-center gap-1.5"
+              className="flex-[2] h-9 rounded-lg text-xs font-bold cursor-pointer flex items-center justify-center gap-1.5"
               style={{ background: '#00D68F', border: 'none', color: '#0F1117' }}
             >
               <Search size={13} /> 搜索
             </button>
+          </div>
+        </div>
+
+        {/* 桌面端布局 */}
+        <div className="hidden md:block">
+          {/* 第一行：日期 */}
+          <div className="flex items-center gap-2.5 mb-3">
+            <span className="text-xs text-[#5A5D70] flex-shrink-0">日期</span>
+            {/* 快捷按钮 */}
+            <div className="flex gap-1">
+              {(['7d', '30d', '90d'] as const).map((q) => {
+                const lbl = q === '7d' ? '近 7 天' : q === '30d' ? '近 30 天' : '近 90 天';
+                const active = quickDate === q;
+                return (
+                  <button
+                    key={q}
+                    onClick={() => applyQuickDate(q)}
+                    className="h-7 px-2.5 rounded-md text-xs cursor-pointer transition-all"
+                    style={{
+                      border: `1px solid ${active ? '#00D68F' : '#2A2D3A'}`,
+                      background: active ? 'rgba(0,214,143,0.1)' : 'transparent',
+                      color: active ? '#00D68F' : '#8B8FA3',
+                    }}
+                  >
+                    {lbl}
+                  </button>
+                );
+              })}
+            </div>
+            {/* 分隔线 */}
+            <div className="w-px h-5" style={{ background: '#2A2D3A' }} />
+            {/* 日期输入 */}
+            <div className="flex items-center gap-1.5">
+              <CustomDatePicker
+                value={filters.beginDate || ''}
+                onChange={(v) => { updateFilter('beginDate', v); setQuickDate('custom'); setAppliedFilters((f) => ({ ...f, beginDate: v })); }}
+                placeholder="开始日期"
+              />
+              <span className="text-[13px]" style={{ color: '#3A3D4A' }}>—</span>
+              <CustomDatePicker
+                value={filters.endDate || ''}
+                onChange={(v) => { updateFilter('endDate', v); setQuickDate('custom'); setAppliedFilters((f) => ({ ...f, endDate: v })); }}
+                placeholder="结束日期"
+              />
+            </div>
+          </div>
+
+          {/* 第二行：筛选条件 + 操作按钮 */}
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <div className="flex items-center gap-2.5 flex-wrap flex-1">
+              {/* 联赛下拉 */}
+              <LeagueDropdown
+                value={filters.leagueName || ''}
+                onChange={(v) => updateFilter('leagueName', v || undefined)}
+                leagues={leagues}
+              />
+
+              {/* 主客队搜索 */}
+              <TeamSearch
+                placeholder="主客队搜索"
+                value={filters.teamName || ''}
+                onChange={(v) => updateFilter('teamName', v || undefined)}
+                suggestions={allTeams}
+              />
+
+              {/* 分隔线 */}
+              <div className="w-px h-6" style={{ background: '#2A2D3A' }} />
+
+              {/* 半全场筛选 */}
+              <HafuDropdown value={hafuFilter} onChange={setHafuFilter} />
+            </div>
+
+            {/* 操作按钮 */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleReset}
+                className="h-[38px] px-3.5 rounded-lg text-[13px] cursor-pointer flex items-center gap-1.5 transition-all"
+                style={{ background: 'none', border: '1px solid #2A2D3A', color: '#8B8FA3' }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#3A3D4A'; e.currentTarget.style.color = '#FFFFFF'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#2A2D3A'; e.currentTarget.style.color = '#8B8FA3'; }}
+              >
+                <RotateCcw size={12} /> 重置
+              </button>
+              <button
+                onClick={handleSearch}
+                className="h-[38px] px-4 rounded-lg text-[13px] font-bold cursor-pointer flex items-center gap-1.5"
+                style={{ background: '#00D68F', border: 'none', color: '#0F1117' }}
+              >
+                <Search size={13} /> 搜索
+              </button>
+            </div>
           </div>
         </div>
       </div>
