@@ -232,7 +232,7 @@ export default function HomePage() {
         <DateTabs dates={dateTabs} selected={selectedDate} onChange={setSelectedDate} />
       )}
 
-      <PageLayout className={dateTabs.length > 0 ? 'pt-28' : ''}>
+      <PageLayout className={dateTabs.length > 0 ? 'pt-24 md:pt-28' : ''}>
         {/* 内容区域 */}
         {pageState === 'loading' && (
           <div className="flex flex-col gap-3">

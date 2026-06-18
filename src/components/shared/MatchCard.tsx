@@ -115,7 +115,7 @@ export function MatchCard({ match, onLoginRequired, isLoggedIn = true }: MatchCa
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={cn(
-        'bg-card rounded-xl p-5 transition-all duration-200 cursor-default',
+        'bg-card rounded-xl p-4 md:p-5 transition-all duration-200 cursor-default',
         hovered ? 'border-primary' : 'border-border',
         'border'
       )}
