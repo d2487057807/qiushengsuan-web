@@ -204,14 +204,15 @@ function CustomDatePicker({
       {/* 触发按钮 */}
       <div
         onClick={() => setOpen((o) => !o)}
-        className="h-[38px] flex items-center gap-1.5 px-2.5 md:px-3 rounded-lg cursor-pointer transition-colors"
+        className="h-[38px] flex items-center gap-2 px-3 rounded-lg cursor-pointer transition-colors"
         style={{
           background: '#252836',
           border: `1px solid ${open ? '#00D68F' : '#2A2D3A'}`,
+          minWidth: 140,
         }}
       >
         <Calendar size={14} color="#8B8FA3" className="flex-shrink-0" />
-        <span className={`text-[12px] md:text-[13px] whitespace-nowrap ${displayText ? 'text-white' : 'text-[#5A5D70]'}`}>
+        <span className={`text-[13px] ${displayText ? 'text-white' : 'text-[#5A5D70]'}`}>
           {displayText || placeholder}
         </span>
       </div>
@@ -369,7 +370,7 @@ function LeagueDropdown({
   const displayText = value || '全部联赛';
 
   return (
-    <div ref={ref} className="relative w-full md:w-[160px]">
+    <div ref={ref} className="relative" style={{ width: 160 }}>
       {/* 触发按钮 */}
       <button
         onClick={() => setOpen((o) => !o)}
@@ -468,7 +469,7 @@ function HafuDropdown({
   const options = ['HH', 'HD', 'HA', 'DH', 'DD', 'DA', 'AH', 'AD', 'AA'];
 
   return (
-    <div ref={ref} className="relative w-full md:w-[140px]">
+    <div ref={ref} className="relative" style={{ width: 140 }}>
       <button
         onClick={() => setOpen((o) => !o)}
         className="h-[38px] w-full flex items-center justify-between gap-2 px-3 rounded-lg cursor-pointer transition-colors"
