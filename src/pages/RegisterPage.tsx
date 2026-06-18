@@ -183,7 +183,7 @@ export default function RegisterPage() {
       await register({
         phoneOrEmail: account,
         verifyCode: smsCode,
-        nickname: account.split('@')[0] || `用户${account.slice(-4)}`,
+        nickname: '',
         password,
       });
       setLoading(false);
