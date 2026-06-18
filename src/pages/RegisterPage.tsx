@@ -196,13 +196,13 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-[#0F1117] flex flex-col">
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-10">
+      <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-6 sm:py-10">
         {/* 卡片 */}
         <div className="w-full max-w-[440px] overflow-hidden"
           style={{ background: '#1A1D28', borderRadius: 16, border: '1px solid #2A2D3A', boxShadow: '0 24px 64px rgba(0,0,0,0.4)' }}>
 
           {/* 头部 */}
-          <div className="px-8 pt-8 pb-6 text-center">
+          <div className="px-5 sm:px-8 pt-6 sm:pt-8 pb-5 sm:pb-6 text-center">
             <div className="w-10 h-10 flex items-center justify-center text-[22px] mx-auto mb-3"
               style={{ background: 'linear-gradient(135deg, #00D68F 0%, #00A06A 100%)', borderRadius: 12, boxShadow: '0 4px 16px rgba(0,214,143,0.3)' }}>
               ⚽

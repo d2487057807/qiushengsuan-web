@@ -367,7 +367,7 @@ export default function LoginPage() {
       )}
 
       {/* 主区域 */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-10 min-h-[calc(100vh-110px)]">
+      <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-6 sm:py-10 min-h-[calc(100vh-110px)]">
         {/* 登录卡片 */}
         <div
           className="w-full max-w-[440px] overflow-hidden"
@@ -379,7 +379,7 @@ export default function LoginPage() {
           }}
         >
           {/* 卡片头部 */}
-          <div className="px-8 pt-8 text-center">
+          <div className="px-5 sm:px-8 pt-6 sm:pt-8 text-center">
             {/* 品牌区域 */}
             <div className="mb-5">
               <div
