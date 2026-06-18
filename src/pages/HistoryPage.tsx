@@ -204,15 +204,15 @@ function CustomDatePicker({
       {/* 触发按钮 */}
       <div
         onClick={() => setOpen((o) => !o)}
-        className="h-[38px] flex items-center gap-1.5 md:gap-2 px-2 md:px-3 rounded-lg cursor-pointer transition-colors"
+        className="h-[38px] flex items-center gap-2 px-3 rounded-lg cursor-pointer transition-colors"
         style={{
           background: '#252836',
           border: `1px solid ${open ? '#00D68F' : '#2A2D3A'}`,
-          minWidth: 110,
+          minWidth: 140,
         }}
       >
         <Calendar size={14} color="#8B8FA3" className="flex-shrink-0" />
-        <span className={`text-[12px] md:text-[13px] ${displayText ? 'text-white' : 'text-[#5A5D70]'}`}>
+        <span className={`text-[13px] ${displayText ? 'text-white' : 'text-[#5A5D70]'}`}>
           {displayText || placeholder}
         </span>
       </div>
@@ -225,7 +225,7 @@ function CustomDatePicker({
             background: '#1E2130',
             border: '1px solid #2A2D3A',
             boxShadow: '0 12px 32px rgba(0,0,0,0.5)',
-            width: 260,
+            width: 280,
           }}
         >
           {/* 年月导航 */}
@@ -1149,17 +1149,21 @@ export default function HistoryPage() {
         <div className="block md:hidden">
           {/* 日期选择器 */}
           <div className="flex gap-2 mb-3">
-            <CustomDatePicker
-              value={filters.beginDate || ''}
-              onChange={(v) => { updateFilter('beginDate', v); setQuickDate('custom'); setAppliedFilters((f) => ({ ...f, beginDate: v })); }}
-              placeholder="开始日期"
-            />
+            <div className="flex-1">
+              <CustomDatePicker
+                value={filters.beginDate || ''}
+                onChange={(v) => { updateFilter('beginDate', v); setQuickDate('custom'); setAppliedFilters((f) => ({ ...f, beginDate: v })); }}
+                placeholder="开始日期"
+              />
+            </div>
             <span className="text-[#3A3D4A] flex items-center">-</span>
-            <CustomDatePicker
-              value={filters.endDate || ''}
-              onChange={(v) => { updateFilter('endDate', v); setQuickDate('custom'); setAppliedFilters((f) => ({ ...f, endDate: v })); }}
-              placeholder="结束日期"
-            />
+            <div className="flex-1">
+              <CustomDatePicker
+                value={filters.endDate || ''}
+                onChange={(v) => { updateFilter('endDate', v); setQuickDate('custom'); setAppliedFilters((f) => ({ ...f, endDate: v })); }}
+                placeholder="结束日期"
+              />
+            </div>
           </div>
 
           {/* 筛选条件 */}
