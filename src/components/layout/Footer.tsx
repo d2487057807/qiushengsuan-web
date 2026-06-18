@@ -6,49 +6,30 @@ import { Link } from 'react-router-dom';
 
 export function Footer() {
   return (
-    <footer
-      style={{
-        background: '#0F1117',
-        borderTop: '1px solid #2A2D3A',
-        marginTop: 32,
-        padding: '32px 24px',
-      }}
-    >
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: '0 auto',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 14,
-        }}
-      >
+    <footer className="mt-6 md:mt-8 py-6 md:py-8 px-4 md:px-6" style={{ background: '#0F1117', borderTop: '1px solid #2A2D3A' }}>
+      <div className="max-w-[1200px] mx-auto flex flex-col items-center gap-3.5">
         {/* Brand */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ fontSize: 18 }}>⚽</span>
-            <span style={{ color: '#00D68F', fontSize: 16, fontWeight: 700 }}>球胜算</span>
+        <div className="flex flex-col items-center gap-1">
+          <div className="flex items-center gap-1.5">
+            <span className="text-lg">⚽</span>
+            <span className="text-base font-bold" style={{ color: '#00D68F' }}>球胜算</span>
           </div>
-          <span style={{ color: '#8B8FA3', fontSize: 12 }}>看球，算球，球胜算</span>
+          <span className="text-xs" style={{ color: '#8B8FA3' }}>看球，算球，球胜算</span>
         </div>
 
         {/* Links */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#8B8FA3', fontSize: 12 }}>
+        <div className="flex items-center gap-1 text-xs" style={{ color: '#8B8FA3' }}>
           {[
             { label: '用户协议', path: '/terms' },
             { label: '隐私政策', path: '/privacy' },
             { label: '免责声明', path: '/disclaimer' },
           ].map((link, i) => (
-            <span key={link.label} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            <span key={link.label} className="flex items-center gap-1">
               {i > 0 && <span>·</span>}
               <Link
                 to={link.path}
-                style={{
-                  color: '#8B8FA3',
-                  textDecoration: 'none',
-                  transition: 'color 0.15s',
-                }}
+                className="no-underline transition-colors"
+                style={{ color: '#8B8FA3' }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = '#FFFFFF')}
                 onMouseLeave={(e) => (e.currentTarget.style.color = '#8B8FA3')}
               >
@@ -59,7 +40,7 @@ export function Footer() {
         </div>
 
         {/* Copyright */}
-        <div style={{ color: '#8B8FA3', fontSize: 12, textAlign: 'center' }}>
+        <div className="text-xs text-center" style={{ color: '#8B8FA3' }}>
           © 2026 球胜算 &nbsp; 数据来源于公开渠道，仅供学习研究参考，不构成任何决策建议
         </div>
 
@@ -68,12 +49,8 @@ export function Footer() {
           href="https://beian.miit.gov.cn/"
           target="_blank"
           rel="noopener noreferrer"
-          style={{
-            color: '#8B8FA3',
-            fontSize: 12,
-            textDecoration: 'none',
-            transition: 'color 0.15s',
-          }}
+          className="text-xs no-underline transition-colors"
+          style={{ color: '#8B8FA3' }}
           onMouseEnter={(e) => (e.currentTarget.style.color = '#FFFFFF')}
           onMouseLeave={(e) => (e.currentTarget.style.color = '#8B8FA3')}
         >

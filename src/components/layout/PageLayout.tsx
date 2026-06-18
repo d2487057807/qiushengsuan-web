@@ -30,7 +30,7 @@ export function PageLayout({
       {/* 主内容区 */}
       <main
         className={cn(
-          'flex-1 pt-16 pb-8 px-6 mx-auto w-full',
+          'flex-1 pt-14 md:pt-16 pb-6 md:pb-8 px-4 md:px-6 mx-auto w-full',
           className
         )}
         style={{ maxWidth }}

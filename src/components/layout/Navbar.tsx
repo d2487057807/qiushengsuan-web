@@ -1,5 +1,6 @@
 /**
  * 顶部导航栏
+ * 支持移动端汉堡菜单
  */
 
 import { useState, useRef, useEffect } from 'react';
@@ -11,6 +12,8 @@ import {
   LogOut,
   User,
   ChevronDown,
+  Menu,
+  X,
 } from 'lucide-react';
 
 // 导航项配置
@@ -24,6 +27,7 @@ export function Navbar() {
   const navigate = useNavigate();
   const { isLoggedIn, userInfo, logout, setVoluntaryLogout } = useAuthStore();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // 点击外部关闭下拉菜单
@@ -36,6 +40,12 @@ export function Navbar() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  // 页面切换时关闭移动菜单
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setDropdownOpen(false);
+  }, [location.pathname]);
 
   // 判断当前激活的导航（详情页根据source判断来源）
   const isActive = (path: string) => {
@@ -57,6 +67,7 @@ export function Navbar() {
     // 先设置主动退出标志，再 logout（logout 会触发 AuthGuard 重定向）
     setVoluntaryLogout(true);
     logout();
+    setMobileMenuOpen(false);
     toast.success('已退出登录');
   };
 
@@ -65,16 +76,16 @@ export function Navbar() {
   const avatarChar = displayName.charAt(0);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50" style={{ background: '#1A1D28', borderBottom: '1px solid #2A2D3A', height: 64 }}>
-      <div className="max-w-[1200px] mx-auto h-full px-6 flex items-center">
+    <header className="fixed top-0 left-0 right-0 z-50 h-14 md:h-16" style={{ background: '#1A1D28', borderBottom: '1px solid #2A2D3A' }}>
+      <div className="max-w-[1200px] mx-auto h-full px-4 md:px-6 flex items-center">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 mr-12 select-none">
-          <span style={{ fontSize: 22 }}>⚽</span>
-          <span style={{ color: '#00D68F', fontSize: 16, fontWeight: 700, letterSpacing: '0.02em' }}>球胜算</span>
+        <Link to="/" className="flex items-center gap-2 mr-4 md:mr-12 select-none">
+          <span className="text-xl">⚽</span>
+          <span className="text-sm md:text-base font-bold tracking-wide" style={{ color: '#00D68F' }}>球胜算</span>
         </Link>
 
-        {/* 导航链接 */}
-        <nav className="flex items-center gap-8">
+        {/* 桌面端导航链接 */}
+        <nav className="hidden md:flex items-center gap-8">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.path}
@@ -92,122 +103,172 @@ export function Navbar() {
         </nav>
 
         {/* 右侧用户区域 */}
-        <div className="ml-auto flex items-center">
+        <div className="ml-auto flex items-center gap-2">
           {isLoggedIn ? (
-            // 已登录：用户头像下拉
-            <div className="relative" ref={dropdownRef}>
-              <button
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-1.5"
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-              >
-                {/* 头像 */}
+            <>
+              {/* 桌面端：用户头像下拉 */}
+              <div className="hidden md:block relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="flex items-center gap-1.5"
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                >
+                  {/* 头像 */}
+                  {userInfo?.avatar ? (
+                    <img
+                      src={userInfo.avatar}
+                      alt="头像"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold"
+                      style={{
+                        background: 'linear-gradient(135deg, #00D68F 0%, #00A06A 100%)',
+                        color: '#0F1117',
+                      }}
+                    >
+                      {avatarChar}
+                    </div>
+                  )}
+                  {/* 下拉箭头 */}
+                  <ChevronDown
+                    size={14}
+                    color="#8B8FA3"
+                    style={{
+                      transition: 'transform 0.2s',
+                      transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                    }}
+                  />
+                </button>
+
+                {/* 下拉菜单 */}
+                {dropdownOpen && (
+                  <div
+                    className="absolute right-0 mt-1 rounded-lg"
+                    style={{
+                      top: 44,
+                      background: '#252836',
+                      border: '1px solid #2A2D3A',
+                      minWidth: 140,
+                      padding: '6px 0',
+                      boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+                      zIndex: 100,
+                    }}
+                  >
+                    {[
+                      { icon: <User size={14} />, label: '个人中心', action: () => { setDropdownOpen(false); navigate('/profile'); } },
+                      { icon: <LogOut size={14} />, label: '退出登录', action: handleLogout },
+                    ].map(({ icon, label, action }) => (
+                      <button
+                        key={label}
+                        onClick={action}
+                        className="w-full flex items-center gap-2 px-4 py-2.5 text-left text-sm transition-colors"
+                        style={{ background: 'none', border: 'none', color: '#FFFFFF', cursor: 'pointer' }}
+                        onMouseEnter={(e) => (e.currentTarget.style.background = '#2A2D3A')}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
+                      >
+                        <span style={{ color: '#8B8FA3' }}>{icon}</span>
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* 移动端：头像 + 汉堡按钮 */}
+              <div className="flex md:hidden items-center gap-2">
                 {userInfo?.avatar ? (
                   <img
                     src={userInfo.avatar}
                     alt="头像"
-                    className="w-8 h-8 rounded-full object-cover"
+                    className="w-7 h-7 rounded-full object-cover"
                   />
                 ) : (
                   <div
+                    className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
                     style={{
-                      width: 32,
-                      height: 32,
-                      borderRadius: '50%',
                       background: 'linear-gradient(135deg, #00D68F 0%, #00A06A 100%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: 14,
                       color: '#0F1117',
-                      fontWeight: 700,
                     }}
                   >
                     {avatarChar}
                   </div>
                 )}
-                {/* 下拉箭头 */}
-                <ChevronDown
-                  size={14}
-                  color="#8B8FA3"
-                  style={{
-                    transition: 'transform 0.2s',
-                    transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                  }}
-                />
-              </button>
-
-              {/* 下拉菜单 */}
-              {dropdownOpen && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: 44,
-                    right: 0,
-                    background: '#252836',
-                    border: '1px solid #2A2D3A',
-                    borderRadius: 10,
-                    minWidth: 140,
-                    padding: '6px 0',
-                    boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
-                    zIndex: 100,
-                  }}
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="p-1"
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8B8FA3' }}
                 >
-                  {[
-                    { icon: <User size={14} />, label: '个人中心', action: () => { setDropdownOpen(false); navigate('/profile'); } },
-                    { icon: <LogOut size={14} />, label: '退出登录', action: handleLogout },
-                  ].map(({ icon, label, action }) => (
-                    <button
-                      key={label}
-                      onClick={action}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 8,
-                        width: '100%',
-                        padding: '10px 16px',
-                        background: 'none',
-                        border: 'none',
-                        color: '#FFFFFF',
-                        fontSize: 13,
-                        cursor: 'pointer',
-                        transition: 'background 0.15s',
-                        textAlign: 'left',
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.background = '#2A2D3A')}
-                      onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
-                    >
-                      <span style={{ color: '#8B8FA3' }}>{icon}</span>
-                      {label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+                  {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+                </button>
+              </div>
+            </>
           ) : (
-            // 未登录：登录按钮
             <Link
               to="/login"
+              className="px-3 py-1.5 rounded-md text-sm font-semibold transition-colors"
               style={{
                 background: 'none',
                 border: 'none',
                 color: '#4A9EFF',
-                fontSize: 14,
-                fontWeight: 600,
-                cursor: 'pointer',
-                padding: '6px 12px',
-                borderRadius: 6,
-                transition: 'background 0.15s',
                 textDecoration: 'none',
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(74,158,255,0.1)')}
-              onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
             >
               登录
             </Link>
           )}
         </div>
       </div>
+
+      {/* 移动端菜单面板 */}
+      {mobileMenuOpen && (
+        <div
+          className="md:hidden"
+          style={{
+            background: '#1A1D28',
+            borderBottom: '1px solid #2A2D3A',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+          }}
+        >
+          <nav className="flex flex-col px-4 py-3">
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="py-3 text-sm no-underline transition-colors"
+                style={{
+                  color: isActive(item.path) ? '#FFFFFF' : '#8B8FA3',
+                  fontWeight: isActive(item.path) ? 600 : 400,
+                  borderBottom: '1px solid #2A2D3A',
+                }}
+              >
+                {item.label}
+              </Link>
+            ))}
+            {isLoggedIn && (
+              <>
+                <Link
+                  to="/profile"
+                  className="py-3 text-sm no-underline transition-colors flex items-center gap-2"
+                  style={{ color: '#8B8FA3', borderBottom: '1px solid #2A2D3A' }}
+                >
+                  <User size={14} />
+                  个人中心
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="py-3 text-sm text-left flex items-center gap-2"
+                  style={{ background: 'none', border: 'none', color: '#FF4D6A', cursor: 'pointer' }}
+                >
+                  <LogOut size={14} />
+                  退出登录
+                </button>
+              </>
+            )}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
