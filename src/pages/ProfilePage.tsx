@@ -1005,7 +1005,7 @@ export default function ProfilePage() {
           <div className="relative mb-2">
             <div
               onClick={handleAvatarClick}
-              className="w-32 h-32 rounded-full overflow-hidden cursor-pointer relative group"
+              className="w-20 h-20 md:w-32 md:h-32 rounded-full overflow-hidden cursor-pointer relative group"
               style={{ border: '3px solid #2A2D3A', transition: 'border-color 0.2s' }}
               onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#00D68F')}
               onMouseLeave={(e) => (e.currentTarget.style.borderColor = '#2A2D3A')}
@@ -1017,7 +1017,7 @@ export default function ProfilePage() {
                   className="w-full h-full flex items-center justify-center"
                   style={{ background: 'linear-gradient(135deg, #3A3D52 0%, #252836 100%)' }}
                 >
-                  <span className="text-5xl font-bold text-white">{(nickname || '用户').charAt(0)}</span>
+                  <span className="text-3xl md:text-5xl font-bold text-white">{(nickname || '用户').charAt(0)}</span>
                 </div>
               )}
               {/* Hover遮罩 */}
@@ -1033,7 +1033,7 @@ export default function ProfilePage() {
             <button
               onClick={handleAvatarClick}
               disabled={avatarUploading}
-              className="absolute bottom-1 right-1 w-7 h-7 rounded-full flex items-center justify-center"
+              className="absolute bottom-1 right-1 w-5 h-5 md:w-7 md:h-7 rounded-full flex items-center justify-center"
               style={{ background: '#00D68F', border: '2px solid #1A1D28', boxShadow: '0 2px 8px rgba(0,214,143,0.4)' }}
             >
               <Camera size={14} color="#0F1117" />

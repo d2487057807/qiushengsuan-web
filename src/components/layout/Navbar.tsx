@@ -197,7 +197,7 @@ export function Navbar() {
                 )}
                 <button
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="p-1"
+                  className="p-2 touch-feedback rounded-lg"
                   style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8B8FA3' }}
                 >
                   {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -236,7 +236,7 @@ export function Navbar() {
               <Link
                 key={item.path}
                 to={item.path}
-                className="py-3 text-sm no-underline transition-colors"
+                className="py-3 text-sm no-underline transition-colors touch-feedback"
                 style={{
                   color: isActive(item.path) ? '#FFFFFF' : '#8B8FA3',
                   fontWeight: isActive(item.path) ? 600 : 400,
@@ -250,7 +250,7 @@ export function Navbar() {
               <>
                 <Link
                   to="/profile"
-                  className="py-3 text-sm no-underline transition-colors flex items-center gap-2"
+                  className="py-3 text-sm no-underline transition-colors flex items-center gap-2 touch-feedback"
                   style={{ color: '#8B8FA3', borderBottom: '1px solid #2A2D3A' }}
                 >
                   <User size={14} />

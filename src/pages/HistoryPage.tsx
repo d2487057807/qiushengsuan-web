@@ -1287,7 +1287,8 @@ export default function HistoryPage() {
       {/* 结果筛选后无数据 */}
       {pageState === 'loaded' && matches.length > 0 && (
         <>
-          <div className="bg-[#1A1D28] rounded-xl overflow-x-auto hide-scrollbar">
+          {/* 桌面端表格 - md 以上显示 */}
+          <div className="hidden md:block bg-[#1A1D28] rounded-xl overflow-x-auto hide-scrollbar">
             {/* 表格最小宽度，保证列不被压缩 */}
             <div style={{ minWidth: 800 }}>
               {/* 表头 */}
@@ -1316,6 +1317,13 @@ export default function HistoryPage() {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* 移动端卡片 - md 以下显示 */}
+          <div className="block md:hidden space-y-2">
+            {matches.map((match) => (
+              <MatchCard key={match.matchId} match={match} onClick={() => handleRowClick(match)} />
+            ))}
           </div>
 
           {/* 分页 */}
@@ -1423,6 +1431,68 @@ function MatchRow({ match, alt, onClick }: { match: HistoryMatch; alt: boolean; 
           </span>
         ) : (
           <span className="text-xs text-[#8B8FA3]">-</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 移动端卡片组件
+ */
+function MatchCard({ match, onClick }: { match: HistoryMatch; onClick: () => void }) {
+  const hr = getHandicapResult(match.score, match.goalLine);
+
+  return (
+    <div
+      onClick={onClick}
+      className="bg-[#1A1D28] rounded-lg p-3 cursor-pointer touch-card active:bg-[#252836] transition-colors"
+      style={{ border: '1px solid #2A2D3A' }}
+    >
+      {/* 顶部：联赛 + 时间 */}
+      <div className="flex items-center justify-between mb-2">
+        <LeagueTag name={match.leagueName} />
+        <span className="text-xs" style={{ color: '#5A5D70' }}>
+          {format(new Date(match.matchTime), 'MM-dd HH:mm')}
+        </span>
+      </div>
+
+      {/* 中间：主队 vs 客队 + 比分 */}
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-sm font-medium text-white flex-1 truncate">{match.homeTeam}</span>
+        <div className="px-3 flex items-center">
+          <span className="text-lg font-extrabold" style={{ color: '#00D68F' }}>
+            {match.score || '-'}
+          </span>
+        </div>
+        <span className="text-sm font-medium text-white flex-1 truncate text-right">{match.awayTeam}</span>
+      </div>
+
+      {/* 底部：让球 + 半全场 */}
+      <div className="flex items-center gap-2">
+        {hr && (
+          <span
+            className="inline-block text-[11px] font-bold px-1.5 py-0.5 rounded"
+            style={{
+              color: hr.color,
+              background: `${hr.color}15`,
+              border: `1px solid ${hr.color}30`,
+            }}
+          >
+            {hr.text}({match.goalLine})
+          </span>
+        )}
+        {match.hafuResult && (
+          <span
+            className="inline-block text-[11px] font-bold px-1.5 py-0.5 rounded"
+            style={{
+              color: getHafuColor(match.hafuResult),
+              background: `${getHafuColor(match.hafuResult)}15`,
+              border: `1px solid ${getHafuColor(match.hafuResult)}30`,
+            }}
+          >
+            {HAFU_MAP[match.hafuResult] || match.hafuResult}
+          </span>
         )}
       </div>
     </div>

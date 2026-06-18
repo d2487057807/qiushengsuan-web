@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 export function Footer() {
   return (
-    <footer className="mt-6 md:mt-8 py-6 md:py-8 px-4 md:px-6" style={{ background: '#0F1117', borderTop: '1px solid #2A2D3A' }}>
+    <footer className="mt-6 md:mt-8 py-6 md:py-8 px-4 md:px-6 safe-area-inset-bottom" style={{ background: '#0F1117', borderTop: '1px solid #2A2D3A' }}>
       <div className="max-w-[1200px] mx-auto flex flex-col items-center gap-3.5">
         {/* Brand */}
         <div className="flex flex-col items-center gap-1">

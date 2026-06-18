@@ -13,3 +13,30 @@ input:-webkit-autofill:active {
   caret-color: #00D68F;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+/* Safe Area 适配刘海屏和底部 Home Indicator */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.safe-area-inset-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* 移动端触摸反馈 */
+@media (hover: none) {
+  .touch-feedback:active {
+    opacity: 0.7;
+    transform: scale(0.98);
+    transition: opacity 0.1s, transform 0.1s;
+  }
+
+  .touch-card:active {
+    background-color: #252836;
+    transition: background-color 0.1s;
+  }
+}
