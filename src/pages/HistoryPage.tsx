@@ -1147,27 +1147,8 @@ export default function HistoryPage() {
       <div className="rounded-xl mb-3 bg-[#1A1D28] p-3 md:p-5">
         {/* 移动端布局 */}
         <div className="block md:hidden">
-          {/* 日期快捷按钮 */}
-          <div className="flex gap-1.5 mb-3 overflow-x-auto hide-scrollbar pb-1">
-            {(['7d', '30d', '90d'] as const).map((q) => {
-              const lbl = q === '7d' ? '7天' : q === '30d' ? '30天' : '90天';
-              const active = quickDate === q;
-              return (
-                <button
-                  key={q}
-                  onClick={() => applyQuickDate(q)}
-                  className="flex-shrink-0 h-8 px-3 rounded-lg text-xs font-medium cursor-pointer transition-all"
-                  style={{
-                    border: `1px solid ${active ? '#00D68F' : '#2A2D3A'}`,
-                    background: active ? 'rgba(0,214,143,0.15)' : 'transparent',
-                    color: active ? '#00D68F' : '#8B8FA3',
-                  }}
-                >
-                  {lbl}
-                </button>
-              );
-            })}
-            <div className="w-px h-8 mx-0.5 flex-shrink-0" style={{ background: '#2A2D3A' }} />
+          {/* 日期选择器 */}
+          <div className="flex gap-2 mb-3">
             <CustomDatePicker
               value={filters.beginDate || ''}
               onChange={(v) => { updateFilter('beginDate', v); setQuickDate('custom'); setAppliedFilters((f) => ({ ...f, beginDate: v })); }}
