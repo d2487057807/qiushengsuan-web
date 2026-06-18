@@ -227,7 +227,7 @@ export default function ForgotPasswordPage() {
                     disabled={!accountOk || loading} />
                 </div>
                 <button onClick={handleSend} disabled={!canSend || loading}
-                  className="h-[44px] px-3.5 rounded-lg border border-[#2A2D3A] bg-transparent text-[13px] font-semibold whitespace-nowrap min-w-[100px] transition-colors"
+                  className="h-[44px] px-3 rounded-lg border border-[#2A2D3A] bg-transparent text-[13px] font-semibold whitespace-nowrap transition-colors flex-shrink-0"
                   style={{ color: canSend ? '#4A9EFF' : '#8B8FA3', cursor: canSend ? 'pointer' : 'not-allowed' }}>
                   {smsState === 'sending' ? '发送中...' : smsState === 'countdown' ? `${countdown}s 后重发` : '发送验证码'}
                 </button>

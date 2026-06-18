@@ -191,7 +191,7 @@ function SmsTab({ onSuccess }: { onSuccess: () => void }) {
         <button
           onClick={handleSendSms}
           disabled={!canSendSms || loading}
-          className="h-[44px] rounded-lg border border-[#2A2D3A] bg-transparent text-[13px] font-semibold whitespace-nowrap min-w-[100px] transition-all"
+          className="h-[44px] px-3 rounded-lg border border-[#2A2D3A] bg-transparent text-[13px] font-semibold whitespace-nowrap transition-all flex-shrink-0"
           style={{
             color: canSendSms ? '#4A9EFF' : '#8B8FA3',
             cursor: canSendSms ? 'pointer' : 'not-allowed',
