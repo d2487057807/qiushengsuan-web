@@ -913,6 +913,7 @@ export default function HistoryPage() {
 
   // 半全场筛选（接口入参）
   const [hafuFilter, setHafuFilter] = useState<string>('');
+  const hafuInitRef = useRef(true);
 
   // 数据
   const [matches, setMatches] = useState<HistoryMatch[]>([]);
@@ -920,8 +921,12 @@ export default function HistoryPage() {
   const [, setLoading] = useState(false);
   const [pageState, setPageState] = useState<'loading' | 'loaded' | 'empty' | 'error'>('loading');
 
-  // 半全场变化时触发查询
+  // 半全场变化时触发查询（跳过首次渲染）
   useEffect(() => {
+    if (hafuInitRef.current) {
+      hafuInitRef.current = false;
+      return;
+    }
     setFilters((f) => ({ ...f, hafuResult: hafuFilter || undefined, pageNum: 1 }));
   }, [hafuFilter]);
 

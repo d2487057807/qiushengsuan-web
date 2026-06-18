@@ -25,13 +25,13 @@
 
 ```bash
 npm install
-npm run dev     # 开发服务器 http://localhost:3000/sporttery/
+npm run dev     # 开发服务器 http://localhost:3000/qiushengsuan/
 npm run build   # 生产构建
 npm run preview # 预览生产构建
 ```
 
 ## 部署
 
-- 基础路径：`/sporttery/`
-- API 代理：`/sporttery/api` → `http://localhost:8181/api`
+- 基础路径：`/qiushengsuan/`
+- API 代理：`/qiushengsuan/api` → `http://localhost:8181/api`
 - 生产构建输出到 `dist/`，部署到 nginx

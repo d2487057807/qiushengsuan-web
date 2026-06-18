@@ -78,8 +78,8 @@
 
 | 术语 | 位置 | 说明 |
 |------|------|------|
-| `sporttery` | API路径 `/sporttery/api`、域名引用 | 后端API路径，用户不可见，修改需同步后端 |
-| `sportteryMatchId` | `types/match.ts`、`HomePage.tsx` | API字段名，对接后端接口，不可单独修改 |
+| `qiushengsuan` | API路径 `/qiushengsuan/api`、域名引用 | 后端API路径，用户不可见，修改需同步后端 |
+| `matchNo` | `types/match.ts`、`HomePage.tsx` | API字段名，对接后端接口，不可单独修改 |
 
 ---
 
